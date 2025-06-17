@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -358,6 +357,11 @@
     margin-bottom: 16px;
     flex-grow: 1;
   }
+  .card-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
   .card-link {
     color: var(--primary-green);
     font-weight: 600;
@@ -368,6 +372,8 @@
     border-radius: 14px;
     text-align: center;
     transition: background-color var(--transition);
+    flex: 1 1 auto;
+    min-width: 140px;
   }
   .card-link:hover,
   .card-link:focus {
@@ -525,9 +531,9 @@
     <h2>Navigation</h2>
     <ul class="nav-list">
       <li><a href="#games"><span class="material-icons" aria-hidden="true">sports_motorsports</span> All NFS Games</a></li>
-      <li><a href="https://store.steampowered.com/publisher/electronic_arts" target="_blank" rel="noopener" aria-label="Electronic Arts publisher page on Steam"><span class="material-icons" aria-hidden="true">storefront</span> EA on Steam</a></li>
-      <li><a href="https://discord.gg/needforspeed" target="_blank" rel="noopener" aria-label="Need for Speed Discord server"><span class="material-icons" aria-hidden="true">chat</span> Need for Speed Discord</a></li>
-      <li><a href="#contact"><span class="material-icons" aria-hidden="true">contact_support</span> Support</a></li>
+      <li><a href="https://www.ea.com/games/need-for-speed/need-for-speed-unbound" target="_blank" rel="noopener" aria-label="Koop Need for Speed Unbound nu - Electronic Arts"><span class="material-icons" aria-hidden="true">shopping_cart</span> Koop Need for Speed™ Unbound nu</a></li>
+      <li><a href="https://store.steampowered.com/franchise/needforspeed" target="_blank" rel="noopener" aria-label="Steam-franchise: Need for Speed"><span class="material-icons" aria-hidden="true">storefront</span> Steam-franchise: Need for Speed</a></li>
+      <li><a href="https://discord.gg/needforspeed" target="_blank" rel="noopener" aria-label="Need for Speed Discord server"><span class="material-icons" aria-hidden="true">chat</span> Need for Speed Discord <span class="badge">Discord</span></a></li>
     </ul>
   </aside>
   <main id="games" tabindex="0">
@@ -562,55 +568,62 @@
 </div>
 <script>
   (() => {
-    // Data: NFS games with Steam URLs and official logos as card images
+    // Data: NFS games with Steam URLs, EA URLs, and official logos as card images
     const games = [
       {
         id: 1,
         title: "Need for Speed™ Hot Pursuit Remastered",
         description: "High-speed police chases and exotic cars in this remastered classic racing game.",
         steamUrl: "https://store.steampowered.com/app/1506830/Need_for_Speed_Hot_Pursuit_Remastered/",
-        image: "https://upload.wikimedia.org/wikipedia/en/d/d2/Need_for_Speed_Hot_Pursuit_Remastered_cover.jpg",
-        alt: "Logo and cover art of Need for Speed Hot Pursuit Remastered"
+        eaUrl: "https://www.ea.com/games/need-for-speed/need-for-speed-hot-pursuit-remastered",
+        image: "https://placehold.co/600x400/png?text=Need+for+Speed+Hot+Pursuit+Remastered+Cover+Art",
+        alt: "Cover art showing a red exotic sports car and a police car in a high-speed chase on a highway with mountains in the background, representing Need for Speed Hot Pursuit Remastered"
       },
       {
         id: 2,
         title: "Need for Speed™ Payback",
         description: "An action driving game with thrilling story and racing set in Fortune Valley.",
         steamUrl: "https://store.steampowered.com/app/1551360/Need_for_Speed_Payback/",
-        image: "https://upload.wikimedia.org/wikipedia/en/0/0f/Need_for_Speed_Payback.png",
-        alt: "Logo and cover art of Need for Speed Payback"
+        eaUrl: "https://www.ea.com/games/need-for-speed/need-for-speed-payback",
+        image: "https://placehold.co/600x400/png?text=Need+for+Speed+Payback+Cover+Art",
+        alt: "Cover art showing three cars racing through a desert landscape with explosions and dust clouds, representing Need for Speed Payback"
       },
       {
         id: 3,
         title: "Need for Speed™ Heat",
         description: "Race day and night through Palm City and evade the cops in intense races.",
         steamUrl: "https://store.steampowered.com/app/1222680/Need_for_Speed_Heat/",
-        image: "https://upload.wikimedia.org/wikipedia/en/6/63/Need_for_Speed_Heat_cover.jpg",
-        alt: "Logo and cover art of Need for Speed Heat"
+        eaUrl: "https://www.ea.com/games/need-for-speed/need-for-speed-heat",
+        deluxeUrl: "https://www.ea.com/games/need-for-speed/need-for-speed-heat/deluxe-edition-upgrade",
+        image: "https://placehold.co/600x400/png?text=Need+for+Speed+Heat+Cover+Art",
+        alt: "Cover art showing a bright yellow sports car speeding through a neon-lit city at night with police cars chasing, representing Need for Speed Heat"
       },
       {
         id: 4,
         title: "Need for Speed™ Rivals",
         description: "High stakes race and police battles in an open world setting.",
         steamUrl: "https://store.steampowered.com/app/210970/Need_for_Speed_Rivals/",
-        image: "https://upload.wikimedia.org/wikipedia/en/7/77/Need_for_Speed_Rivals_cover.png",
-        alt: "Logo and cover art of Need for Speed Rivals"
+        eaUrl: "https://www.ea.com/games/need-for-speed/need-for-speed-rivals",
+        image: "https://placehold.co/600x400/png?text=Need+for+Speed+Rivals+Cover+Art",
+        alt: "Cover art showing a red sports car and a police car racing side by side on a coastal highway with stormy skies, representing Need for Speed Rivals"
       },
       {
         id: 5,
         title: "Need for Speed™ Most Wanted",
         description: "Race against cops and rivals in an open world urban environment.",
         steamUrl: "https://store.steampowered.com/app/192870/Need_for_Speed_Most_Wanted/",
-        image: "https://upload.wikimedia.org/wikipedia/en/6/63/Need_for_Speed_Most_Wanted_2012_cover.png",
-        alt: "Logo and cover art of Need for Speed Most Wanted"
+        eaUrl: "https://www.ea.com/games/need-for-speed/need-for-speed-most-wanted",
+        image: "https://placehold.co/600x400/png?text=Need+for+Speed+Most+Wanted+Cover+Art",
+        alt: "Cover art showing a black sports car speeding through a city street with police cars in pursuit, representing Need for Speed Most Wanted"
       },
       {
         id: 6,
-        title: "Need for Speed™ The Run",
-        description: "Race cross-country in the most high-stakes event of the series.",
-        steamUrl: "https://store.steampowered.com/app/226320/Need_for_Speed_The_Run/",
-        image: "https://upload.wikimedia.org/wikipedia/en/2/20/Need_for_Speed_The_Run_cover.png",
-        alt: "Logo and cover art of Need for Speed The Run"
+        title: "PS3 Emulator",
+        description: "Need For Speed The Run Demo aangekondigd, speel het via RPCS3 - De PlayStation 3-emulator.",
+        steamUrl: null,
+        eaUrl: "https://rpcs3.net/",
+        image: "https://placehold.co/600x400/png?text=RPCS3+PS3+Emulator+Logo",
+        alt: "Logo of RPCS3 PlayStation 3 emulator with stylized blue and white design on a dark background"
       }
     ];
 
@@ -674,16 +687,52 @@
         descEl.className = "card-description";
         descEl.textContent = game.description;
         contentDiv.appendChild(descEl);
-        // Link
-        const linkEl = document.createElement("a");
-        linkEl.href = game.steamUrl;
-        linkEl.className = "card-link";
-        linkEl.target = "_blank";
-        linkEl.rel = "noopener noreferrer";
-        linkEl.setAttribute("aria-label", `View ${game.title} on Steam store`);
-        linkEl.textContent = "View on Steam";
-        contentDiv.appendChild(linkEl);
+        // Links container
+        const linksDiv = document.createElement("div");
+        linksDiv.className = "card-links";
 
+        // Steam link if available
+        if(game.steamUrl){
+          const steamLink = document.createElement("a");
+          steamLink.href = game.steamUrl;
+          steamLink.className = "card-link";
+          steamLink.target = "_blank";
+          steamLink.rel = "noopener noreferrer";
+          steamLink.setAttribute("aria-label", `View ${game.title} on Steam store`);
+          steamLink.textContent = `Need for Speed™ ${game.title.replace("Need for Speed™ ","")} op Steam`;
+          linksDiv.appendChild(steamLink);
+        }
+
+        // EA link if available
+        if(game.eaUrl){
+          const eaLink = document.createElement("a");
+          eaLink.href = game.eaUrl;
+          eaLink.className = "card-link";
+          eaLink.target = "_blank";
+          eaLink.rel = "noopener noreferrer";
+          if(game.title === "PS3 Emulator"){
+            eaLink.setAttribute("aria-label", `Visit RPCS3 PlayStation 3 emulator website`);
+            eaLink.textContent = "RPCS3 - De PlayStation 3-emulator";
+          } else {
+            eaLink.setAttribute("aria-label", `Koop ${game.title} - Electronic Arts`);
+            eaLink.textContent = `Koop ${game.title}`;
+          }
+          linksDiv.appendChild(eaLink);
+        }
+
+        // Deluxe edition link for Heat
+        if(game.deluxeUrl){
+          const deluxeLink = document.createElement("a");
+          deluxeLink.href = game.deluxeUrl;
+          deluxeLink.className = "card-link";
+          deluxeLink.target = "_blank";
+          deluxeLink.rel = "noopener noreferrer";
+          deluxeLink.setAttribute("aria-label", `Buy Need for Speed Heat Deluxe Edition Upgrade Expansion Pack - Electronic Arts`);
+          deluxeLink.textContent = "Uitbreiding Deluxe Edition";
+          linksDiv.appendChild(deluxeLink);
+        }
+
+        contentDiv.appendChild(linksDiv);
         card.appendChild(contentDiv);
         fragment.appendChild(card);
       });
@@ -756,4 +805,3 @@
 </script>
 </body>
 </html>
-
