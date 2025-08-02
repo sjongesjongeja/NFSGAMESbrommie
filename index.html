@@ -1,3 +1,809 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Special Bram Site - Need for Speed Games</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<style>
+  /* CSS Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  html {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    scroll-behavior: smooth;
+    background: #e0f2f1;
+    color: #004d40;
+  }
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #00695c 0%, #01579b 100%);
+    color: #e0f2f1;
+  }
+  /* Scrollbar customization */
+  body {
+    scrollbar-width: thin;
+    scrollbar-color: #26a69a #004d40;
+  }
+  body::-webkit-scrollbar {
+    width: 12px;
+  }
+  body::-webkit-scrollbar-track {
+    background: #004d40;
+  }
+  body::-webkit-scrollbar-thumb {
+    background-color: #26a69a;
+    border-radius: 20px;
+    border: 3px solid #004d40;
+  }
+
+  /* Layout */
+  :root {
+    --header-height: 64px;
+    --sidebar-width: 280px;
+    --primary-green: #26a69a;
+    --primary-blue: #0288d1;
+    --glass-bg: rgba(255 255 255 / 0.10);
+    --glass-bg-hover: rgba(255 255 255 / 0.15);
+    --shadow-color: rgba(0, 0, 0, 0.15);
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body.dark {
+    background: linear-gradient(135deg, #004d40 0%, #002f6c 100%);
+    color: #b2dfdb;
+  }
+  body.dark a {
+    color: #80cbc4;
+  }
+  body.dark header,
+  body.dark footer,
+  body.dark .sidebar {
+    background: rgba(0 77 64 / 0.4);
+    backdrop-filter: blur(12px);
+  }
+  body.dark .card {
+    background: rgba(0 77 64 / 0.6);
+    box-shadow: 0 8px 20px rgba(0 77 64 / 0.6);
+  }
+  body.dark .btn-toggle {
+    background: #004d40;
+    color: #b2dfdb;
+  }
+
+  /* Container grid for desktop */
+  #app {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    grid-template-rows: var(--header-height) 1fr auto;
+    grid-template-areas:
+      "header header"
+      "sidebar main"
+      "footer footer";
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  header {
+    grid-area: header;
+    position: sticky;
+    top: 0;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    color: #e0f2f1;
+    z-index: 30;
+    user-select: none;
+  }
+  header .brand {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  header nav {
+    display: flex;
+    gap: 16px;
+  }
+  header nav a {
+    color: #e0f2f1;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  header nav a:hover,
+  header nav a:focus {
+    background: var(--glass-bg-hover);
+    outline: none;
+  }
+  header nav a .material-icons {
+    font-size: 20px;
+  }
+  .btn-toggle {
+    cursor: pointer;
+    border: none;
+    background: var(--glass-bg);
+    border-radius: 9999px;
+    padding: 6px 10px;
+    margin-left: 12px;
+    color: #e0f2f1;
+    font-weight: 700;
+    font-size: 1rem;
+    user-select: none;
+    transition: background-color var(--transition);
+  }
+  .btn-toggle:hover,
+  .btn-toggle:focus {
+    background: var(--glass-bg-hover);
+    outline: none;
+  }
+  .mobile-menu-button {
+    background: none;
+    border: none;
+    color: #e0f2f1;
+    font-size: 32px;
+    cursor: pointer;
+    user-select: none;
+    outline-offset: 4px;
+    transition: color var(--transition);
+    display: none;
+  }
+  .mobile-menu-button:hover,
+  .mobile-menu-button:focus {
+    color: var(--primary-green);
+    outline: none;
+  }
+
+  .sidebar {
+    grid-area: sidebar;
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    padding: 24px 16px 32px;
+    display: flex;
+    flex-direction: column;
+    color: #e0f2f1;
+    border-right: 1px solid rgba(255 255 255 / 0.1);
+    overflow-y: auto;
+    user-select: none;
+  }
+  .sidebar h2 {
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .nav-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .nav-list li a {
+    color: #b2dfdb;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    font-size: 1rem;
+    border-radius: 8px;
+    padding: 10px 12px;
+    transition: background-color var(--transition);
+    position: relative;
+  }
+  .nav-list li a:hover,
+  .nav-list li a:focus {
+    background: var(--glass-bg-hover);
+    outline: none;
+    color: #e0f2f1;
+  }
+  .nav-list li a .material-icons {
+    font-size: 22px;
+    color: var(--primary-green);
+  }
+  /* Notification badge */
+  .nav-list li a .badge {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #c62828;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 12px;
+    pointer-events: none;
+  }
+
+  main {
+    grid-area: main;
+    padding: 24px 32px 48px;
+    overflow-y: auto;
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    background: transparent;
+  }
+
+  .search-bar {
+    width: 100%;
+    max-width: 540px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .search-bar input {
+    flex-grow: 1;
+    padding: 12px 18px;
+    border-radius: 14px;
+    border: none;
+    font-size: 1rem;
+    background: var(--glass-bg);
+    color: #e0f2f1;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: background-color var(--transition);
+  }
+  .search-bar input::placeholder {
+    color: #b2dfdb;
+  }
+  .search-bar input:focus {
+    outline: 2px solid var(--primary-green);
+    background: var(--glass-bg-hover);
+  }
+  .search-bar button {
+    background: var(--primary-green);
+    border: none;
+    border-radius: 14px;
+    padding: 10px 16px;
+    color: #004d40;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background-color var(--transition);
+  }
+  .search-bar button:hover,
+  .search-bar button:focus {
+    background: var(--primary-blue);
+    color: #e0f2f1;
+    outline: none;
+  }
+  .search-bar button .material-icons {
+    font-size: 20px;
+  }
+
+  /* Game Cards grid */
+  .game-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+    gap: 32px;
+  }
+  .card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 20px var(--shadow-color);
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .card:hover,
+  .card:focus-within {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px var(--shadow-color);
+    outline: none;
+  }
+  .card-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a3a31;
+  }
+  .card-image img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    display: block;
+  }
+  .card-content {
+    padding: 20px 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .card-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+    line-height: 1.2;
+    color: #b2dfdb;
+  }
+  .card-description {
+    font-size: 0.875rem;
+    color: #a7d2cb;
+    margin-bottom: 16px;
+    flex-grow: 1;
+  }
+  .card-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .card-link {
+    color: var(--primary-green);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 10px 16px;
+    background: #004d40;
+    border-radius: 14px;
+    text-align: center;
+    transition: background-color var(--transition);
+    flex: 1 1 auto;
+    min-width: 140px;
+  }
+  .card-link:hover,
+  .card-link:focus {
+    background: var(--primary-blue);
+    outline: none;
+  }
+
+  footer {
+    grid-area: footer;
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    font-size: 0.85rem;
+    color: #b2dfdb;
+    border-top: 1px solid rgba(255 255 255 / 0.15);
+    user-select: none;
+  }
+  footer .social-links {
+    display: flex;
+    gap: 16px;
+  }
+  footer .social-links a {
+    color: #80cbc4;
+    text-decoration: none;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition);
+  }
+  footer .social-links a:hover,
+  footer .social-links a:focus {
+    color: var(--primary-green);
+    outline: none;
+  }
+
+  /* Responsive */
+
+  /* Mobile first */
+  @media (max-width: 767px) {
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      height: var(--header-height);
+      padding: 0 16px;
+    }
+    .sidebar {
+      position: fixed;
+      top: var(--header-height);
+      left: -280px;
+      width: 280px;
+      height: calc(100vh - var(--header-height));
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      box-shadow: 4px 0 20px var(--shadow-color);
+      transition: left var(--transition);
+      overflow-y: auto;
+      z-index: 40;
+    }
+    .sidebar.open {
+      left: 0;
+    }
+    main {
+      padding: 16px;
+      min-height: calc(100vh - var(--header-height));
+    }
+    footer {
+      position: sticky;
+      bottom: 0;
+      padding: 12px 16px;
+      border-top: 1px solid rgba(255 255 255 / 0.2);
+      font-size: 0.9rem;
+    }
+    .mobile-menu-button {
+      display: block;
+    }
+  }
+  @media (min-width:768px) and (max-width:1023px) {
+    #app {
+      grid-template-columns: 280px 1fr;
+      grid-template-rows: var(--header-height) 1fr auto;
+      grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+      height: 100vh;
+    }
+    .sidebar {
+      position: relative;
+      top: 0;
+      left: 0 !important;
+      height: auto;
+      box-shadow: none;
+    }
+    main {
+      padding: 24px 32px;
+      overflow-y: auto;
+    }
+    footer {
+      position: relative;
+    }
+    .mobile-menu-button {
+      display: none;
+    }
+  }
+  @media (min-width:1024px) {
+    #app {
+      grid-template-columns: 280px 1fr;
+      grid-template-rows: var(--header-height) 1fr auto;
+      grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+      height: 100vh;
+    }
+    .sidebar {
+      position: relative;
+      top: 0;
+      left: 0 !important;
+      height: auto;
+      box-shadow: none;
+    }
+    main {
+      padding: 32px 48px;
+      overflow-y: auto;
+    }
+    footer {
+      position: relative;
+    }
+    .mobile-menu-button {
+      display: none;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="app" role="application" aria-label="The Special Bram Site Need for Speed games application">
+  <header>
+    <div class="brand" tabindex="0">The Special Bram Site</div>
+    <nav aria-label="Primary navigation">
+      <a href="#games" tabindex="0"><span class="material-icons" aria-hidden="true">home</span> Games</a>
+      <button id="toggle-theme" class="btn-toggle" aria-pressed="false" aria-label="Toggle theme light/dark" title="Toggle theme">🌗</button>
+      <button id="toggle-sidebar" class="mobile-menu-button" aria-label="Toggle sidebar menu" aria-expanded="false" aria-controls="sidebar" aria-haspopup="true">
+        <span class="material-icons" aria-hidden="true">menu</span>
+      </button>
+    </nav>
+  </header>
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Sidebar navigation" tabindex="-1">
+    <h2>Navigation</h2>
+    <ul class="nav-list">
+      <li><a href="#games"><span class="material-icons" aria-hidden="true">sports_motorsports</span> All NFS Games</a></li>
+      <li><a href="https://store.steampowered.com/franchise/NFS" target="_blank" rel="noopener" aria-label="Steam-franchise: Need for Speed"><span class="material-icons" aria-hidden="true">storefront</span> Steam-franchise: Need for Speed</a></li>
+      <li><a href="https://discord.gg/needforspeed" target="_blank" rel="noopener" aria-label="Need for Speed Discord server"><span class="material-icons" aria-hidden="true">chat</span> Need for Speed Discord</a></li>
+    </ul>
+  </aside>
+  <main id="games" tabindex="0">
+    <section aria-label="Search and filter Need for Speed games">
+      <form class="search-bar" role="search" aria-live="polite" aria-atomic="true" aria-relevant="additions removals">
+        <input
+          type="search"
+          id="search-input"
+          name="search"
+          placeholder="Search NFS games..."
+          aria-label="Search Need for Speed games by title"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button type="button" id="clear-search" aria-label="Clear search input" title="Clear search">
+          <span class="material-icons" aria-hidden="true">close</span>
+        </button>
+      </form>
+    </section>
+    <section aria-label="List of Need for Speed games available on Steam">
+      <div id="game-list" class="game-list" aria-live="polite" aria-atomic="true" aria-relevant="additions"></div>
+    </section>
+  </main>
+  <footer>
+    <div>Made by Brommie &copy; 2024</div>
+    <div class="social-links" aria-label="Social media links">
+      <a href="https://twitter.com/search?q=Need%20for%20Speed" target="_blank" rel="noopener" aria-label="Twitter Search Need for Speed"><span class="material-icons" aria-hidden="true">twitter</span></a>
+      <a href="https://www.facebook.com/NeedforSpeed/" target="_blank" rel="noopener" aria-label="Facebook Need for Speed"><span class="material-icons" aria-hidden="true">facebook</span></a>
+      <a href="https://www.youtube.com/channel/UC84T7V18RQOd9wh5QRqqWNA" target="_blank" rel="noopener" aria-label="YouTube Need for Speed channel"><span class="material-icons" aria-hidden="true">youtube_searched_for</span></a>
+    </div>
+  </footer>
+</div>
+<script>
+  (() => {
+    // Data: NFS games with Steam URLs, EA URLs, and official logos as card images
+    const games = [
+      {
+        id: 1,
+        title: "Need for Speed™ Hot Pursuit Remastered",
+        description: "High-speed police chases and exotic cars in this remastered classic racing game.",
+        steamUrl: "https://store.steampowered.com/app/1328660/Need_for_Speed_Hot_Pursuit_Remastered/",
+        eaUrl: "https://www.ea.com/games/need-for-speed/need-for-speed-hot-pursuit-remastered",
+        image: "image/hot_pursuit.jpg",
+        alt: "Cover art showing a red exotic sports car and a police car in a high-speed chase on a highway with mountains in the background, representing Need for Speed Hot Pursuit Remastered"
+      },
+      {
+        id: 2,
+        title: "Need for Speed™ Payback",
+        description: "An action driving game with thrilling story and racing set in Fortune Valley.",
+        steamUrl: "https://store.steampowered.com/app/1262580/Need_for_Speed_Payback/",
+        eaUrl: "https://www.ea.com/games/need-for-speed/need-for-speed-payback",
+        image: "image/payback.jpg",
+        alt: "Cover art showing three cars racing through a desert landscape with explosions and dust clouds, representing Need for Speed Payback"
+      },
+      {
+        id: 3,
+        title: "Need for Speed™ Heat",
+        description: "Race day and night through Palm City and evade the cops in intense races.",
+        steamUrl: "https://store.steampowered.com/app/1222680/Need_for_Speed_Heat/",
+        eaUrl: "https://www.ea.com/games/need-for-speed/need-for-speed-heat",
+        deluxeUrl: "https://www.ea.com/en/games/need-for-speed/need-for-speed-heat/buy/addon/need-for-speed-heat-deluxe-edition-upgrade",
+        image: "image/heat.jpg",
+        alt: "Cover art showing a bright yellow sports car speeding through a neon-lit city at night with police cars chasing, representing Need for Speed Heat"
+      },
+      {
+        id: 4,
+        title: "Need for Speed™ Rivals",
+        description: "High stakes race and police battles in an open world setting.",
+        steamUrl: "https://store.steampowered.com/app/1262600/Need_for_Speed_Rivals/",
+        eaUrl: "https://www.ea.com/games/need-for-speed/need-for-speed-rivals",
+        image: "image/rivals.jpg",
+        alt: "Cover art showing a red sports car and a police car racing side by side on a coastal highway with stormy skies, representing Need for Speed Rivals"
+      },
+      {
+        id: 5,
+        title: "Need for Speed™ Most Wanted",
+        description: "Race against cops and rivals in an open world urban environment.",
+        steamUrl: "https://store.steampowered.com/app/1262560/Need_for_Speed_Most_Wanted/",
+        eaUrl: "https://www.ea.com/games/need-for-speed/need-for-speed-most-wanted",
+        image: "image/mostwanted.jpg",
+        alt: "Cover art showing a black sports car speeding through a city street with police cars in pursuit, representing Need for Speed Most Wanted"
+      },
+      {
+        id: 6,
+        title: "PS3 Emulator",
+        description: "Need For Speed The Run Demo aangekondigd, speel het via RPCS3 - De PlayStation 3-emulator.",
+        steamUrl: null,
+        eaUrl: "https://rpcs3.net/",
+        image: "image/rpcs3.jpg",
+        alt: "Logo of RPCS3 PlayStation 3 emulator with stylized blue and white design on a dark background"
+      }
+    ];
+
+    // Elements
+    const gameListEl = document.getElementById("game-list");
+    const searchInput = document.getElementById("search-input");
+    const clearSearchBtn = document.getElementById("clear-search");
+    const toggleThemeBtn = document.getElementById("toggle-theme");
+    const toggleSidebarBtn = document.getElementById("toggle-sidebar");
+    const sidebarEl = document.getElementById("sidebar");
+
+    // Accessibility - focus trap for sidebar on mobile
+    let lastFocusedElBeforeSidebar = null;
+
+    // Render games based on filter
+    function renderGames(filter = '') {
+      const filterLower = filter.trim().toLowerCase();
+      gameListEl.innerHTML = "";
+      const filteredGames = filterLower === ''
+        ? games
+        : games.filter(g => g.title.toLowerCase().includes(filterLower));
+
+      if(filteredGames.length === 0){
+        const message = document.createElement("p");
+        message.textContent = "No games found matching your search.";
+        message.style.color = "#a7d2cb";
+        message.style.fontSize = "1.2rem";
+        gameListEl.appendChild(message);
+        return;
+      }
+      const fragment = document.createDocumentFragment();
+      filteredGames.forEach(game => {
+        const card = document.createElement("article");
+        card.className = "card";
+        card.tabIndex = 0;
+        card.setAttribute("role", "region");
+        card.setAttribute("aria-labelledby", `game-title-${game.id}`);
+        // Image
+        const imgDiv = document.createElement("div");
+        imgDiv.className = "card-image";
+        const img = document.createElement("img");
+        img.src = game.image;
+        img.alt = game.alt;
+        img.loading = "lazy";
+        img.onerror = () => {
+          img.src = "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/aa6aad03-9309-4335-a2d9-a911b3df6a52.png";
+        };
+        imgDiv.appendChild(img);
+        card.appendChild(imgDiv);
+        // Content wrapper
+        const contentDiv = document.createElement("div");
+        contentDiv.className = "card-content";
+        // Title
+        const titleEl = document.createElement("h3");
+        titleEl.className = "card-title";
+        titleEl.id = `game-title-${game.id}`;
+        titleEl.textContent = game.title;
+        contentDiv.appendChild(titleEl);
+        // Description
+        const descEl = document.createElement("p");
+        descEl.className = "card-description";
+        descEl.textContent = game.description;
+        contentDiv.appendChild(descEl);
+        // Links container
+        const linksDiv = document.createElement("div");
+        linksDiv.className = "card-links";
+
+        // Steam link if available
+        if(game.steamUrl){
+          const steamLink = document.createElement("a");
+          steamLink.href = game.steamUrl;
+          steamLink.className = "card-link";
+          steamLink.target = "_blank";
+          steamLink.rel = "noopener noreferrer";
+          steamLink.setAttribute("aria-label", `View ${game.title} on Steam store`);
+          steamLink.textContent = `Need for Speed™ ${game.title.replace("Need for Speed™ ","")} op Steam`;
+          linksDiv.appendChild(steamLink);
+        }
+
+        // EA link if available
+        if(game.eaUrl){
+          const eaLink = document.createElement("a");
+          eaLink.href = game.eaUrl;
+          eaLink.className = "card-link";
+          eaLink.target = "_blank";
+          eaLink.rel = "noopener noreferrer";
+          if(game.title === "PS3 Emulator"){
+            eaLink.setAttribute("aria-label", `Visit RPCS3 PlayStation 3 emulator website`);
+            eaLink.textContent = "RPCS3 - De PlayStation 3-emulator";
+          } else {
+            eaLink.setAttribute("aria-label", `Koop ${game.title} - Electronic Arts`);
+            eaLink.textContent = `Koop ${game.title}`;
+          }
+          linksDiv.appendChild(eaLink);
+        }
+
+        // Deluxe edition link for Heat
+        if(game.deluxeUrl){
+          const deluxeLink = document.createElement("a");
+          deluxeLink.href = game.deluxeUrl;
+          deluxeLink.className = "card-link";
+          deluxeLink.target = "_blank";
+          deluxeLink.rel = "noopener noreferrer";
+          deluxeLink.setAttribute("aria-label", `Buy Need for Speed Heat Deluxe Edition Upgrade Expansion Pack - Electronic Arts`);
+          deluxeLink.textContent = "Uitbreiding Deluxe Edition";
+          linksDiv.appendChild(deluxeLink);
+        }
+
+        contentDiv.appendChild(linksDiv);
+        card.appendChild(contentDiv);
+        fragment.appendChild(card);
+      });
+      gameListEl.appendChild(fragment);
+    }
+
+    // Search input event
+    searchInput.addEventListener("input", (e) => {
+      renderGames(e.target.value);
+    });
+    clearSearchBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      renderGames('');
+      searchInput.focus();
+    });
+
+    // Theme toggling
+    function updateTheme(dark) {
+      if (dark) {
+        document.body.classList.add("dark");
+        toggleThemeBtn.setAttribute("aria-pressed", "true");
+        toggleThemeBtn.textContent = "🌞";
+      } else {
+        document.body.classList.remove("dark");
+        toggleThemeBtn.setAttribute("aria-pressed", "false");
+        toggleThemeBtn.textContent = "🌗";
+      }
+      localStorage.setItem("brommie-theme", dark ? "dark" : "light");
+    }
+    toggleThemeBtn.addEventListener("click", () => {
+      const isDark = document.body.classList.contains("dark");
+      updateTheme(!isDark);
+    });
+    // Load theme on start
+    (function() {
+      const savedTheme = localStorage.getItem("brommie-theme");
+      if(savedTheme === "dark"){
+        updateTheme(true);
+      } else {
+        updateTheme(false);
+      }
+    })();
+
+    // Mobile sidebar toggle & accessibility
+    toggleSidebarBtn.addEventListener("click", () => {
+      const isOpen = sidebarEl.classList.toggle("open");
+      toggleSidebarBtn.setAttribute("aria-expanded", isOpen);
+      if(isOpen){
+        lastFocusedElBeforeSidebar = document.activeElement;
+        sidebarEl.focus();
+      } else if (lastFocusedElBeforeSidebar){
+        lastFocusedElBeforeSidebar.focus();
+      }
+    });
+    // Close sidebar on escape key when open (mobile)
+    sidebarEl.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && sidebarEl.classList.contains("open")){
+        sidebarEl.classList.remove("open");
+        toggleSidebarBtn.setAttribute("aria-expanded", "false");
+        if(lastFocusedElBeforeSidebar){
+          lastFocusedElBeforeSidebar.focus();
+        }
+      }
+    });
+
+    // Initial render
+    renderGames();
+
+  })();
+</script>
+</body>
+</html>
 
 <!DOCTYPE html>
 <html lang="nl">
