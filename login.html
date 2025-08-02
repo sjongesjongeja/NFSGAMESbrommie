@@ -1,176 +1,8 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Portaal</title>
-    <style>
-        :root {
-            --primary-color: #26a69a;
-            --error-color: #c62828;
-            --success-color: #2e7d32;
-            --text-color: #e0f2f1;
-            --light-gray: #004d40;
-            --border-radius: 8px;
-        }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #00695c 0%, #01579b 100%);
-            color: #e0f2f1;
-            line-height: 1.6;
-            margin: 0;
-            min-height: 100vh;
-        }
-        
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .login-box {
-            background: rgba(255 255 255 / 0.10);
-            backdrop-filter: blur(14px);
-            padding: 40px;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 450px;
-            transition: transform 0.3s ease;
-            border: 1px solid rgba(255 255 255 / 0.15);
-        }
-        
-        .login-box:hover {
-            transform: translateY(-5px);
-        }
-        
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .login-header h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: var(--primary-color);
-        }
-        
-        .login-header img {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 20px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid rgba(255 255 255 / 0.2);
-            border-radius: var(--border-radius);
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: rgba(0 77 64 / 0.4);
-            color: #e0f2f1;
-        }
-        
-        .form-group input:focus {
-            border-color: var(--primary-color);
-            outline: none;
-        }
-        
-        .error-message {
-            color: var(--error-color);
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: #26a69a;
-            color: #004d40;
-            border: none;
-            padding: 12px 20px;
-            width: 100%;
-            font-size: 16px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: background 0.3s ease;
-            font-weight: 600;
-        }
-        
-        .btn:hover {
-            background: #3a5bef;
-        }
-        
-        .login-footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-        
-        .login-footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .login-footer a:hover {
-            text-decoration: underline;
-        }
-        
-        .success-message {
-            display: none;
-            background: var(--success-color);
-            color: white;
-            padding: 15px;
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .error-message {
-            display: none;
-            background: var(--error-color);
-            color: white;
-            padding: 15px;
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        @media (max-width: 480px) {
-            .login-box {
-                padding: 30px 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
+ <div class="login-container">
         <div class="login-box">
             <div class="login-header">
-                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c765fad5-8268-4038-9669-42d34d6a6a74.png" alt="Bedrijfslogo - modern minimalstisch ontwerp met blauwe accenten" />
-                <h1>Welkom terug</h1>
-                <p>Log in om toegang te krijgen tot uw account</p>
+                <img src="images/your-logo-file.png" alt="Need for Speed Logo" style="width: 120px; height: auto;"/>
+                <h1>Welkom bij NFS Games</h1>
             </div>
             
             <div id="successMessage" class="success-message">
@@ -218,8 +50,8 @@
             
             // Voor demo-doeleinden - in een productieomgeving zou je server-side authenticatie gebruiken
             const demoUsers = [
-                { email: 'admin@voorbeeld.nl', password: 'wachtwoord123' },
-                { email: 'gebruiker@voorbeeld.nl', password: 'test1234' }
+                { email: 'your@email.com', password: 'yourpassword' },
+                { email: 'guest@email.com', password: 'guest123' }
             ];
             
             // Valideer formulier
@@ -262,7 +94,7 @@
                         
                         // Doorverwijzen na succesvolle login (simulatie)
                         setTimeout(() => {
-                            window.location.href = 'dashboard.html';
+                            window.location.href = 'https://sjongesjongeja.github.io/NFSGAMESbrommie/';
                         }, 1500);
                     } else {
                         errorMessage.style.display = 'block';
@@ -289,7 +121,7 @@
                 return re.test(email);
             }
             
-            // Voor demo: controleer of er al is ingelogd
+            // Controleer login status in localStorage
             if (localStorage.getItem('isLoggedIn') === 'true') {
                 emailInput.value = localStorage.getItem('userEmail');
                 passwordInput.focus();
